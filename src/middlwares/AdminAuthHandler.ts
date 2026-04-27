@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { sendError } from '../services/helpers';
 
-export async function authenticationHandler(req: Request, res: Response, next: NextFunction) {
+export async function adminAuthenticationHandler(req: Request, res: Response, next: NextFunction) {
     try {
         const JWT_SECRET = process.env.JWT_SECRET;
 
