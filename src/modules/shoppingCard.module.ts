@@ -26,9 +26,10 @@ const  ShoppingCartSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: true,
+    index: true,
   },
-  product: [SelectProduct],
+  products: [SelectProduct],
   status: {
     type: String,
     enum: ["active", "completed", "cancelled"],

@@ -18,9 +18,7 @@ export async function loginAsUser(req: Request, res: Response) {
             });
         }
 
-        console.log(existUser);
         const validatePassowrd = await bcrypt.compare(req.body.password, existUser?.password);
-        console.log('here', validatePassowrd);
 
         const AccessToken = generateAccessToken({ userId: existUser?._id?.toString(), role: "USER" });
         const RefreshToken = generateRefreshToken({ userId: existUser?._id?.toString() , role: "USER"});
@@ -55,7 +53,6 @@ export async function loginAsAdmin(req: Request, res: Response) {
             });
         }
         const validatePassowrd = await bcrypt.compare(req.body.password, existUser?.password);
-        console.log('here', validatePassowrd);
 
         const AccessToken = generateAccessToken({ userId: existUser?._id?.toString(), role: "ADMIN" });
         const RefreshToken = generateRefreshToken({ userId: existUser?._id?.toString() , role: "ADMIN"});
@@ -82,7 +79,6 @@ export async function RegisterUser(req: Request, res: Response) {
             $or: [{ email: req.body.email }, { secondName: req.body.secondName }],
         });
 
-        console.log(existUser); // null
         if (existUser) {
             return sendError(res, {
                 success: false,

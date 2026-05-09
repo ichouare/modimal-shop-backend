@@ -7,13 +7,13 @@ const userSchema = new Schema({
     },
     secondName: {
         type: String,
-        unique: true,
     },
     email: {
         type: String,
         unique: true,
         trim: true,
-        required: true
+        required: true,
+        index: true,
     },
     password: {
         type: String,
@@ -50,7 +50,7 @@ const userSchema = new Schema({
        type: Schema.Types.ObjectId,
        ref: "Payment",
     },
-    shoppingCardId: {
+    shoppingCartId: {
          type: Schema.Types.ObjectId,
          ref: "Card",
     }

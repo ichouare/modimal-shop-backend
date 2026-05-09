@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import compression from "compression"
 
 import AllRouter from '../src/routes/v1/index';
 import connectdb from './config/connectdb';
@@ -10,6 +11,9 @@ const app = express();
 
 // middlewares
 app.use(express.json());
+app.use(compression())
+app.set("query parser", "extended") // add this line to parser query string if we have embbding data
+
 app.use(
     cors({
         credentials: true, // Allow sending cookies
@@ -24,7 +28,7 @@ connectdb();
 
 app.use('/api/v1', AllRouter);
 app.get('/', (req, res) => {
-    console.log(req);
+
     return res.status(200).json({ message: 'this message from server test' });
 });
 

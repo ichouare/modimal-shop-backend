@@ -10,7 +10,7 @@ const ImagesSchema = new Schema({
   images: [{
      type: String,
   }],
-  colors:  String,
+  color:  String,
 })
 
 const ProducSchema = new Schema({
@@ -26,11 +26,13 @@ const ProducSchema = new Schema({
   size: [
     {
       type: String,
+      index: true
     }
   ],
   price: {
     type: Number,
     required: true,
+    index: true,
     default: 0,
   },
   currency: {
@@ -39,11 +41,8 @@ const ProducSchema = new Schema({
 },
 stock: {
   type: Number,
+  index: true,
   default: 0
-},
- soldOut: {
-  type: Boolean,
-  default: false
 },
   careAdvices : {
     type: String
@@ -63,4 +62,4 @@ stock: {
 
 
 
-export const Product = model("product", ProducSchema)
+export const Product = model("Product", ProducSchema)

@@ -6,7 +6,6 @@ export const validate =
     (schema: { body?: ZodSchema; query?: ZodSchema; params?: ZodSchema }) =>
     (req: Request, res: Response, next: NextFunction) => {
         try {
-            console.log(req.body);
             if (schema.body) schema.body.parse(req.body);
             if (schema.query) schema.query.parse(req.query);
             if (schema.params) schema.params.parse(req.params);

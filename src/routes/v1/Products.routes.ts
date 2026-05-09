@@ -4,10 +4,13 @@ import { AddProduct, UpdateProduct } from '../../controllers/v1/admin/Product.co
 import { validate } from '../../middlwares/validationHandler'
 import { ProductZodSchema } from '../../types/Product.schema'
 import { adminAuthenticationHandler } from '../../middlwares/AdminAuthHandler'
+import { getAllProducts, GetFilterProduct } from '../../controllers/v1/Product.controller'
 
 
 const router = Router()
 
+
+router.get("/", getAllProducts)
 
 
 router.post("/",adminAuthenticationHandler, validate({
@@ -19,24 +22,14 @@ router.put("/:id", adminAuthenticationHandler,  validate({
   body: ProductZodSchema
 }),  UpdateProduct)
 
-router.put("/:id", adminAuthenticationHandler,  UpdateProduct)
+router.put("/:instanceAPIid", adminAuthenticationHandler,  UpdateProduct)
 
 
-router.get("/filter", (req, res) => {
-   const query = req.query
-   console.log("here", query)
-    return sendSuccess(res, 200, {
-   success: true,
-   message: `Your product id is`,
-   data: {
-    ...query
-   }
-  })
-})
+router.get("/filter", GetFilterProduct)
+
 
 router.get("/:id" , (req, res) => {
   const {id} =   req.params
-  console.log("this id of product i want to get-->", id)
   return sendSuccess(res, 200, {
    success: true,
    message: `Your product id is ${id}`
