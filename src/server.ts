@@ -1,13 +1,47 @@
-import express from 'express';
-import cors from 'cors';
+import compression from "compression";
 import cookieParser from 'cookie-parser';
-import compression from "compression"
-
+import cors from 'cors';
+import express from 'express';
 import AllRouter from '../src/routes/v1/index';
 import connectdb from './config/connectdb';
-import { errorHandler } from './middlwares/errorHandler';
+import { errorHandler } from './middleware/errorHandler';
+
+import z from "zod";
+import { userSchema } from "./types/user.schema";
+import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+import { registry } from "./swagger";
+
+
 
 const app = express();
+
+
+
+registry.registerPath({
+    method: 'get',
+    path: '/users/',
+    description: 'Get a user by ID',
+    summary: 'Get User',
+    request: {
+      query: z.object({
+        id: z.string().openapi({ description: 'ID of the user' }),
+      }),
+    },
+    responses: {
+    200: {
+      description: 'User found',
+      content: {
+        'application/json': {
+          schema: userSchema,
+        },
+      },
+    },
+  },
+  tags: ['Users'],
+})
+
+
+
 
 // middlewares
 app.use(express.json());

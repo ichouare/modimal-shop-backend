@@ -2,6 +2,7 @@ import {Schema, model} from 'mongoose'
 
 
 
+
 const ImagesSchema = new Schema({
    thumbnail: {
     type: String,
@@ -13,7 +14,7 @@ const ImagesSchema = new Schema({
   color:  String,
 })
 
-const ProducSchema = new Schema({
+const ProductSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -62,4 +63,4 @@ stock: {
 
 
 
-export const Product = model("Product", ProducSchema)
+export const Product = model("Product", ProductSchema)

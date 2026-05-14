@@ -9,7 +9,7 @@ export async function getAllProducts(req: Request, res: Response){
       const {title, limit = 3, page} = req.query
       let productsList = []
       if(!title)
-        productsList = await Product.find().limit(3)
+        productsList = await Product.find().limit(+limit)
       else
         productsList = await Product.find({title : {$regex: title as string, $options: "i"}}).limit(+limit)
       return sendSuccess(res, 200, {

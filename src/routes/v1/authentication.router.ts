@@ -2,11 +2,13 @@ import { Router } from 'express';
 import { User } from '../../modules/user.module';
 import { sendError } from '../../services/helpers';
 import { Auth0Register, loginAsUser,loginAsAdmin, RegisterUser } from '../../controllers/v1/authenticatiin.contoller';
-import { validate } from '../../middlwares/validationHandler';
+import { validate } from '../../middleware/validationHandler';
 import { TSchema } from '../../types/register.schema';
 import { LoginSchema } from '../../types/login.schema';
 
 const router = Router();
+
+
 
 router.post(
     '/user',

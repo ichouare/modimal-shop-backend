@@ -18,8 +18,10 @@ export async function loginAsUser(req: Request, res: Response) {
             });
         }
 
-        const validatePassowrd = await bcrypt.compare(req.body.password, existUser?.password);
-
+        const validatePassword = await bcrypt.compare(req.body.password, existUser?.password);
+        if(!validatePassword) {
+                return sendError(res, { success: false, message: 'Invalid credentials' });
+        }
         const AccessToken = generateAccessToken({ userId: existUser?._id?.toString(), role: "USER" });
         const RefreshToken = generateRefreshToken({ userId: existUser?._id?.toString() , role: "USER"});
         setCookies(res, AccessToken, RefreshToken);
@@ -50,10 +52,12 @@ export async function loginAsAdmin(req: Request, res: Response) {
             return sendError(res, {
                 success: false,
                 message: 'Please make to enter a correct criditienls',
-            });
+            }, 401);
         }
         const validatePassowrd = await bcrypt.compare(req.body.password, existUser?.password);
-
+        if (!validatePassowrd) {
+                return sendError(res, { success: false, message: 'Invalid credentials' });
+}
         const AccessToken = generateAccessToken({ userId: existUser?._id?.toString(), role: "ADMIN" });
         const RefreshToken = generateRefreshToken({ userId: existUser?._id?.toString() , role: "ADMIN"});
         setCookies(res, AccessToken, RefreshToken);
@@ -155,10 +159,12 @@ export async function Auth0Register(req: Request, res: Response) {
 
     const AccessToken = generateAccessToken({
       userId: user._id.toString(),
+      role: user.role
     });
 
     const RefreshToken = generateRefreshToken({
       userId: user._id.toString(),
+      role: user.role
     });
 
     setCookies(res, AccessToken, RefreshToken);

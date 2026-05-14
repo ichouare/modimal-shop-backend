@@ -1,9 +1,9 @@
 import {Router } from 'express'
 import { sendSuccess } from '../../services/helpers'
 import { AddProduct, UpdateProduct } from '../../controllers/v1/admin/Product.controller'
-import { validate } from '../../middlwares/validationHandler'
+import { validate } from '../../middleware/validationHandler'
 import { ProductZodSchema } from '../../types/Product.schema'
-import { adminAuthenticationHandler } from '../../middlwares/AdminAuthHandler'
+import { adminAuthenticationHandler } from '../../middleware/AdminAuthHandler'
 import { getAllProducts, GetFilterProduct } from '../../controllers/v1/Product.controller'
 
 
