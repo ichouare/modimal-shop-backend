@@ -22,13 +22,23 @@ export async function authenticationHandler(req: Request, res: Response, next: N
             });
         }
 
-        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; role: string };
 
         if (!decoded?.userId) {
             return sendError(res, {
                 success: false,
                 message: 'Invalid token payload',
             });
+        }
+        if (!decoded?.role) {
+            return sendError(
+                res,
+                {
+                    success: false,
+                    message: 'Unauthorized user',
+                },
+                401
+            );
         }
 
         req.userId = decoded.userId;
@@ -42,9 +52,13 @@ export async function authenticationHandler(req: Request, res: Response, next: N
             });
         }
 
-        return sendError(res, {
-            success: false,
-            message: 'Authentication failed',
-        });
+        return sendError(
+            res,
+            {
+                success: false,
+                message: 'Authentication failed',
+            },
+            401
+        );
     }
 }
