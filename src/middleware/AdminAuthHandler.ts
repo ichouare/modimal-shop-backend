@@ -22,7 +22,7 @@ export async function adminAuthenticationHandler(req: Request, res: Response, ne
             });
         }
 
-        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string , role: "USER" | "ADMIN"};
+        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; role: 'USER' | 'ADMIN' };
 
         if (!decoded?.userId) {
             return sendError(res, {
@@ -31,9 +31,8 @@ export async function adminAuthenticationHandler(req: Request, res: Response, ne
             });
         }
 
-        if(decoded?.role !== "ADMIN")
-        {
-          return res.status(401).json({
+        if (decoded?.role !== 'ADMIN') {
+            return res.status(401).json({
                 success: false,
                 message: 'Please logged as admin to make this operation',
             });
