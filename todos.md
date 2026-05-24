@@ -70,7 +70,7 @@ Based on my analysis of your e-commerce API, here's a detailed breakdown of what
 1. **✅ Delete Product Route** [COMPLETED]
 
 ```typescript
-router.delete('/:id', adminAuthenticationHandler, deleteProduct);
+router.delete("/:id", adminAuthenticationHandler, deleteProduct);
 ```
 
 2. **✅ User Authentication Middleware** [COMPLETED]
@@ -206,20 +206,20 @@ server {
 **Create:** `docker-compose.yml`
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   backend:
     build: .
     ports:
-      - '5001:5001'
+      - "5001:5001"
   nginx:
     image: nginx:alpine
     ports:
-      - '80:80'
+      - "80:80"
   redis:
     image: redis:7-alpine
     ports:
-      - '6379:6379'
+      - "6379:6379"
 ```
 
 ---
@@ -325,12 +325,12 @@ Payment Service┘                ──> Email on order confirmed
 **docker-compose.yml** (All services + message queue)
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   nginx:
     image: nginx:alpine
     ports:
-      - '80:80'
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
 
@@ -359,8 +359,8 @@ services:
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
     ports:
-      - '5672:5672'
-      - '15672:15672'
+      - "5672:5672"
+      - "15672:15672"
 
   mongodb:
     image: mongo:7

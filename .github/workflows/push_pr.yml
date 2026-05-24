@@ -2,15 +2,15 @@
 name: modimal_CI
 # workflow trigger
 on:
-    push:
-        # add branch
-        branches:
-            - dev
-            - 'feature/**'
-            - 'fixbug/**'
+  push:
+    # add branch
+    branches:
+      - dev
+      - "feature/**"
+      - "fixbug/**"
 
 jobs:
-    runs-on: ubuntu-latest
-    steps:
-        - name: checkout code
-          uses: action/checkout@V4.2.2
+  runs-on: ubuntu-latest
+  steps:
+    - name: checkout code
+      uses: action/checkout@V4.2.2
