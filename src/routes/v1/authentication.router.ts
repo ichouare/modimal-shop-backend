@@ -1,53 +1,51 @@
-import { Router } from 'express';
-import { User } from '../../modules/user.module';
-import { sendError } from '../../services/helpers';
+import { Router } from 'express'
 import refreshToken, {
-    Auth0Register,
-    loginAsUser,
-    loginAsAdmin,
-    RegisterUser,
-    loggOut,
-} from '../../controllers/v1/authenticatiin.contoller';
-import { validate } from '../../middleware/validationHandler';
-import { TSchema } from '../../types/register.schema';
-import { LoginSchema } from '../../types/login.schema';
+  Auth0Register,
+  loggOut,
+  loginAsAdmin,
+  loginAsUser,
+  RegisterUser,
+} from '../../controllers/v1/authentication.controller'
+import { validate } from '../../middleware/validationHandler'
+import { LoginSchema } from '../../types/login.schema'
+import { TSchema } from '../../types/register.schema'
 
-const router = Router();
-
-router.post(
-    '/user',
-    validate({
-        body: LoginSchema,
-    }),
-    loginAsUser
-);
+const router = Router()
 
 router.post(
-    '/admin',
-    validate({
-        body: LoginSchema,
-    }),
-    loginAsAdmin
-);
+  '/user',
+  validate({
+    body: LoginSchema,
+  }),
+  loginAsUser
+)
 
 router.post(
-    '/register',
-    validate({
-        body: TSchema,
-    }),
-    RegisterUser
-);
+  '/admin',
+  validate({
+    body: LoginSchema,
+  }),
+  loginAsAdmin
+)
 
 router.post(
-    '/auth0',
-    validate({
-        body: TSchema,
-    }),
-    Auth0Register
-);
+  '/register',
+  validate({
+    body: TSchema,
+  }),
+  RegisterUser
+)
 
-router.get('/logout', loggOut);
+router.post(
+  '/auth0',
+  validate({
+    body: TSchema,
+  }),
+  Auth0Register
+)
 
-router.get('/refreshToken', refreshToken);
+router.get('/logout', loggOut)
 
-export default router;
+router.get('/refreshToken', refreshToken)
+
+export default router

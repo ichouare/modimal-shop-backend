@@ -1,62 +1,49 @@
-import compression from 'compression';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import express from 'express';
-import AllRouter from '../src/routes/v1/index';
-import connectdb from './config/connectdb';
-import { errorHandler } from './middleware/errorHandler';
-import Stripe from "stripe"
+import compression from 'compression'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import express from 'express'
+import AllRouter from '../src/routes/v1/index'
+import connectdb from './config/connectdb'
+import { errorHandler } from './middleware/errorHandler'
 
+import { envSchema } from './services/validateEnvFile'
 
-import z from 'zod';
-import { userSchema } from './types/user.schema';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import { registry } from './swagger';
-import { envSchema } from './services/validateEnvFile';
-
-const app = express();
-
-
+const app = express()
 
 // middlewares
-app.use(express.json());
-app.use(compression());
-app.set('query parser', 'extended'); // add this line to parser query string if we have embbding data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(compression())
+app.set('query parser', 'extended') // add this line to parser query string if we have embbding data
+app.use(express.urlencoded({ extended: true }))
 
 app.use(
-    cors({
-        credentials: true, // Allow sending cookies
-        origin: 'http://localhost:3000',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    })
-);
+  cors({
+    credentials: true, // Allow sending cookies
+    origin: process.env.FRONTEND_URL,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  })
+)
 
-
-
-
-app.use(cookieParser()); // parser cookies
+app.use(cookieParser()) // parser cookies
 try {
-const result = envSchema.safeParse(process.env);
+  const result = envSchema.safeParse(process.env)
 
-
-if (!result.success) {
-    console.error("Invalid environment variables:");
-    console.error(result.error.format());
-    process.exit(1);
+  if (!result.success) {
+    console.error('Invalid environment variables:')
+    console.error(result.error.format())
+    process.exit(1)
   }
 
-connectdb();
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-app.use('/api/v1', AllRouter);
+  connectdb()
 
+  app.use('/api/v1', AllRouter)
 
-app.use(errorHandler);
+  app.use(errorHandler)
 
-app.listen(process.env.PORT, () => {
-    console.log('server listen to PORT', process.env.PORT);
-});
-}catch(e: unknown){
-    console.log("server stop runing withi error", e?.message!)
-    process.exit(1)
+  app.listen(process.env.PORT, () => {
+    console.log('server listen to PORT', process.env.PORT)
+  })
+} catch (e: any) {
+  console.log('server stop runing withi error', e?.message!)
+  process.exit(1)
 }
