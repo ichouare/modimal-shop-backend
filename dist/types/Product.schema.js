@@ -13,7 +13,7 @@ exports.ImagesZodSchema = zod_1.z
         .array(zod_1.z.string().url('Image must be a valid URL'))
         .optional()
         .openapi({ description: 'Additional product image URLs' }),
-    colors: zod_1.z.string().optional().openapi({ example: 'navy' }),
+    color: zod_1.z.string().optional().openapi({ example: 'navy' }),
 })
     .openapi('ProductImage');
 exports.ProductZodSchema = zod_1.z
@@ -23,8 +23,14 @@ exports.ProductZodSchema = zod_1.z
     }),
     description: zod_1.z.string().optional(),
     images: zod_1.z.array(exports.ImagesZodSchema).min(1, 'At least one image is required'),
-    size: zod_1.z.array(zod_1.z.string()).optional().openapi({ example: ['S', 'M', 'L'] }),
-    price: zod_1.z.number().min(0, 'Price cannot be negative').openapi({ example: 49.99 }),
+    size: zod_1.z
+        .array(zod_1.z.string())
+        .optional()
+        .openapi({ example: ['S', 'M', 'L'] }),
+    price: zod_1.z
+        .number()
+        .min(0, 'Price cannot be negative')
+        .openapi({ example: 49.99 }),
     currency: zod_1.z.string().default('MAD'),
     stock: zod_1.z.number().min(0).default(0).openapi({ example: 100 }),
     soldOut: zod_1.z.boolean().optional(),
@@ -39,23 +45,23 @@ exports.ProductListQuerySchema = zod_1.z.object({
         .string()
         .optional()
         .openapi({ description: 'Filter products by title (case-insensitive)' }),
-    limit: zod_1.z.coerce
-        .number()
-        .optional()
-        .openapi({ description: 'Maximum number of products to return', example: 3 }),
+    limit: zod_1.z.coerce.number().optional().openapi({
+        description: 'Maximum number of products to return',
+        example: 3,
+    }),
     page: zod_1.z.coerce
         .number()
         .optional()
         .openapi({ description: 'Page number for pagination', example: 1 }),
 });
 exports.ProductFilterQuerySchema = zod_1.z.object({
-    color: zod_1.z.string().optional().openapi({ description: 'Filter by image color' }),
+    color: zod_1.z
+        .string()
+        .optional()
+        .openapi({ description: 'Filter by image color' }),
     size: zod_1.z.string().optional().openapi({ description: 'Filter by size' }),
     fabric: zod_1.z.string().optional().openapi({ description: 'Filter by fabric' }),
-    sort: zod_1.z
-        .record(zod_1.z.string(), zod_1.z.coerce.number())
-        .optional()
-        .openapi({
+    sort: zod_1.z.record(zod_1.z.string(), zod_1.z.coerce.number()).optional().openapi({
         description: 'Sort fields as query object, e.g. sort[price]=-1 (requires extended query parser)',
     }),
 });

@@ -7,9 +7,11 @@ exports.createCheckoutSession = createCheckoutSession;
 exports.updateOrderStatus = updateOrderStatus;
 const stripe_1 = __importDefault(require("stripe"));
 const helpers_1 = require("../../services/helpers");
-const shoppingCard_module_1 = require("../../modules/shoppingCard.module");
+const shoppingCart_module_1 = require("../../modules/shoppingCart.module");
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-const stripe = stripeSecretKey ? new stripe_1.default(stripeSecretKey, { apiVersion: '2026-04-22.dahlia' }) : null;
+const stripe = stripeSecretKey
+    ? new stripe_1.default(stripeSecretKey, { apiVersion: '2026-04-22.dahlia' })
+    : null;
 const currency = 'eur';
 const deliveryCharge = 10;
 async function createCheckoutSession(req, res) {
@@ -49,7 +51,7 @@ async function createCheckoutSession(req, res) {
             price: item.price,
         }));
         const total = products.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        const checkoutCart = await shoppingCard_module_1.ShoppingCart.create({
+        const checkoutCart = await shoppingCart_module_1.ShoppingCart.create({
             user: userId,
             products,
             shipping: deliveryCharge,
@@ -85,7 +87,7 @@ async function createCheckoutSession(req, res) {
     catch (err) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: 'Please try again',
+            message: err?.message || 'Please try again',
         });
     }
 }
@@ -104,7 +106,7 @@ async function updateOrderStatus(req, res) {
                 message: 'Success flag must be true or false',
             }, 400);
         }
-        const checkoutCart = await shoppingCard_module_1.ShoppingCart.findById(order_id);
+        const checkoutCart = await shoppingCart_module_1.ShoppingCart.findById(order_id);
         if (!checkoutCart) {
             return (0, helpers_1.sendError)(res, {
                 success: false,
@@ -130,7 +132,7 @@ async function updateOrderStatus(req, res) {
     catch (err) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: 'Unable to update order status',
+            message: err.message || 'Unable to update order status',
         });
     }
 }

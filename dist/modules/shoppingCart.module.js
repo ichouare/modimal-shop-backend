@@ -5,8 +5,8 @@ const mongoose_1 = require("mongoose");
 const SelectProduct = new mongoose_1.Schema({
     ProductId: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Product",
-        required: true
+        ref: 'Product',
+        required: true,
     },
     size: String,
     color: String,
@@ -14,37 +14,37 @@ const SelectProduct = new mongoose_1.Schema({
         type: Number,
         required: true,
         min: 1,
-        default: 1
+        default: 1,
     },
     price: {
         type: Number,
-        required: true
-    }
+        required: true,
+    },
 });
 const ShoppingCartSchema = new mongoose_1.Schema({
     user: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
         required: true,
         index: true,
     },
     products: [SelectProduct],
     status: {
         type: String,
-        enum: ["active", "completed", "cancelled"],
-        default: "active"
+        enum: ['active', 'completed', 'cancelled'],
+        default: 'active',
     },
     tax: {
         type: Number,
-        default: 0
+        default: 0,
     },
     shipping: {
         type: Number,
-        default: 0
+        default: 0,
     },
     total: {
         type: Number,
-        default: 0
-    }
+        default: 0,
+    },
 }, { timestamps: true });
-exports.ShoppingCart = (0, mongoose_1.model)("ShoppingCart", ShoppingCartSchema);
+exports.ShoppingCart = (0, mongoose_1.model)('ShoppingCart', ShoppingCartSchema);

@@ -20,7 +20,7 @@ async function AddProduct(req, res) {
     catch (err) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: 'please make sure to send a correct data',
+            message: err.message || 'please make sure to send a correct data',
         });
     }
 }
@@ -48,7 +48,7 @@ async function UpdateProduct(req, res) {
     catch (err) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: 'please make sure to send a correct data',
+            message: err.message || 'please make sure to send a correct data',
         });
     }
 }
@@ -70,7 +70,7 @@ async function deleteProduct(req, res) {
     catch (err) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: 'something wrong !!',
+            message: err.message || 'something wrong !!',
         });
     }
 }
@@ -78,14 +78,14 @@ async function uplaodImage(req, res) {
     if (!req.file) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: "No file uploaded",
+            message: 'No file uploaded',
         }, 400);
     }
     return (0, helpers_1.sendSuccess)(res, 201, {
         success: true,
-        message: "Upload success",
+        message: 'Upload success',
         data: {
             fileName: req.file.filename,
-        }
+        },
     });
 }

@@ -16,34 +16,21 @@ Assessment as a milestone review. The base is workable for an MVP; several items
 
 ## Code feedback (prioritized)
 
-### P1 — Correctness & security
+### P2 — Maintainability ✅
 
-- **Auth0:** sets `name` but User model uses `firstName` / `secondName`.
-- **Password reset:** manual hash; `confirmPassword` not checked; duplicate `findById`.
-- **`generateToken.ts`:** stray `7;` and duplicate `JWT_SECRET` check.
-- **Product filter:** `images.colors` vs Mongoose `color`; sort uses `createAt` vs `createdAt`.
-- **Pagination:** `page` ignored; always returns `page: 1`.
-- **`GET /product/:id`:** commented out—no product detail API.
-- **CORS** hardcoded to `http://localhost:3000`.
-
-### P2 — Maintainability
-
-- Filename typos: `authenticatiin.contoller`, `shoppingCard`, `uploamulter`, `restPassword`.
-- `any` in filters and Stripe items.
-- Debug `console.log` in `GetFilterProduct`.
-- `@types/*` in `dependencies`; `swagger-jsdoc` likely unused.
-- **No tests** (`npm test` is a stub).
-- **CI workflow** invalid YAML—CI doesn't run.
+- ~~Filename typos~~ — fixed (`authentication.controller`, `shoppingCart`, `uploadmulter`, `resetPassword` / `resetPassword.schema`).
+- ~~Debug `console.log` in `GetFilterProduct`~~ — removed.
+- ~~`@types/*` in `dependencies`; unused `swagger-jsdoc` types~~ — types in `devDependencies`; `@types/swagger-jsdoc` removed.
 
 ### P3 — Product / API gaps
 
 - **Shopping cart:** model exists, no REST API.
-- **Category:** empty schema, not linked to products.
 - **Favorites:** field on user, no endpoints.
 - **Orders:** no `GET /orders` or `GET /orders/:id`.
 - **Stock:** not decremented on payment.
 - **Uploads:** no static route to serve files.
 - **Swagger:** product + stripe done; auth still missing logout, refresh, reset-password.
+- **CI workflow** invalid YAML—CI doesn't run.
 
 ---
 

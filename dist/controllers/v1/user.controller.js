@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.currentUser = currentUser;
-exports.restPassword = restPassword;
+exports.resetPassword = resetPassword;
 const helpers_1 = require("../../services/helpers");
 const user_module_1 = require("../../modules/user.module");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -26,13 +26,13 @@ async function currentUser(req, res) {
     catch (err) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: 'somthing Wrong!!',
+            message: err.message || 'somthing Wrong!!',
         });
     }
 }
-async function restPassword(req, res) {
+async function resetPassword(req, res) {
     try {
-        const { password, newPassword, confirmPassword } = req.body;
+        const { password, newPassword } = req.body;
         const userId = req.userId;
         if (!userId)
             return (0, helpers_1.sendError)(res, {
@@ -45,13 +45,7 @@ async function restPassword(req, res) {
                 success: false,
                 message: 'Unauthorized user',
             }, 401);
-        const userExist = await user_module_1.User.findById(userId).select('password');
-        if (!userExist)
-            return (0, helpers_1.sendError)(res, {
-                success: false,
-                message: 'Unauthorized user',
-            }, 401);
-        const validPassword = await bcrypt_1.default.compareSync(password, userExist?.password);
+        const validPassword = await bcrypt_1.default.compareSync(password, user?.password);
         if (!validPassword) {
             return (0, helpers_1.sendError)(res, {
                 success: false,
@@ -65,7 +59,7 @@ async function restPassword(req, res) {
                 message: 'somthing Wrong!!',
             });
         }
-        const UpdateUser = await user_module_1.User.findByIdAndUpdate(userId, {
+        await user_module_1.User.findByIdAndUpdate(userId, {
             password: hashPassowrd,
         });
         return (0, helpers_1.sendSuccess)(res, 201, {
@@ -76,7 +70,7 @@ async function restPassword(req, res) {
     catch (err) {
         return (0, helpers_1.sendError)(res, {
             success: false,
-            message: 'somthing Wrong!!',
+            message: err.message || 'somthing Wrong!!',
         });
     }
 }

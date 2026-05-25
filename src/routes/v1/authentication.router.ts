@@ -5,7 +5,7 @@ import refreshToken, {
   loginAsAdmin,
   loginAsUser,
   RegisterUser,
-} from '../../controllers/v1/authentication.contoller'
+} from '../../controllers/v1/authentication.controller'
 import { validate } from '../../middleware/validationHandler'
 import { LoginSchema } from '../../types/login.schema'
 import { TSchema } from '../../types/register.schema'

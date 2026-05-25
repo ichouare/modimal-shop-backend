@@ -52,7 +52,6 @@ export async function GetFilterProduct(req: Request, res: Response) {
     if (color) filter['images.color'] = color
 
     if (sort) {
-      console.log(typeof sort) // object
       let sortObj: any = {}
 
       if (sort && typeof sort === 'object') {

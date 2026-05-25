@@ -22,8 +22,6 @@ const options: OpenAPIObjectConfig = {
   ],
 }
 
-// const swaggerSpec = swaggerJSDoc(options)
-
 export const registry = new OpenAPIRegistry()
 
 registry.registerComponent('securitySchemes', 'cookieAuth', {

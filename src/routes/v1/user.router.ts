@@ -1,11 +1,11 @@
 import Router from 'express'
 import {
   currentUser,
-  restPassword,
+  resetPassword,
 } from '../../controllers/v1/user.controller'
 import { authenticationHandler } from '../../middleware/authenticationHandler'
 import { validate } from '../../middleware/validationHandler'
-import { ResetPasswordSchema } from '../../types/resetPassoword.schema'
+import { ResetPasswordSchema } from '../../types/resetPassword.schema'
 
 const router = Router()
 
@@ -14,7 +14,7 @@ router.post(
   '/reset-password',
   authenticationHandler,
   validate({ body: ResetPasswordSchema }),
-  restPassword
+  resetPassword
 )
 
 export default router

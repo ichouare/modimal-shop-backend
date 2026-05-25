@@ -7,26 +7,28 @@ const ImagesSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    images: [{
+    images: [
+        {
             type: String,
-        }],
+        },
+    ],
     color: String,
 });
 const ProductSchema = new mongoose_1.Schema({
     title: {
         type: String,
         required: true,
-        index: true
+        index: true,
     },
     description: {
-        type: String
+        type: String,
     },
     images: [ImagesSchema],
     size: [
         {
             type: String,
-            index: true
-        }
+            index: true,
+        },
     ],
     price: {
         type: Number,
@@ -36,24 +38,24 @@ const ProductSchema = new mongoose_1.Schema({
     },
     currency: {
         type: String,
-        default: "MAD"
+        default: 'MAD',
     },
     stock: {
         type: Number,
         index: true,
-        default: 0
+        default: 0,
     },
     careAdvices: {
-        type: String
+        type: String,
     },
     fabric: {
         type: String,
     },
     shipping: {
-        type: String
+        type: String,
     },
     returnMethod: {
         type: String,
-    }
+    },
 }, { timestamps: true });
-exports.Product = (0, mongoose_1.model)("Product", ProductSchema);
+exports.Product = (0, mongoose_1.model)('Product', ProductSchema);

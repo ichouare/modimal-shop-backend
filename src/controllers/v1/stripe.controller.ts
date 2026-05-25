@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
 import Stripe from 'stripe'
 import { sendError, sendSuccess } from '../../services/helpers'
-import { ShoppingCart } from '../../modules/shoppingCard.module'
+import { ShoppingCart } from '../../modules/shoppingCart.module'
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripe = stripeSecretKey

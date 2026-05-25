@@ -10,7 +10,10 @@ exports.CheckoutItemSchema = zod_1.z
         description: 'Product MongoDB id',
         example: '507f1f77bcf86cd799439011',
     }),
-    name: zod_1.z.string().openapi({ description: 'Product display name', example: 'Cotton T-Shirt' }),
+    name: zod_1.z.string().openapi({
+        description: 'Product display name',
+        example: 'Cotton T-Shirt',
+    }),
     price: zod_1.z.number().openapi({ description: 'Unit price', example: 29.99 }),
     quantity: zod_1.z.number().int().min(1).openapi({ example: 1 }),
     size: zod_1.z.string().optional().openapi({ example: 'M' }),

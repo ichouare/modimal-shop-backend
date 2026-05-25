@@ -34,23 +34,23 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const authentication_contoller_1 = __importStar(require("../../controllers/v1/authentication.contoller"));
+const authentication_controller_1 = __importStar(require("../../controllers/v1/authentication.controller"));
 const validationHandler_1 = require("../../middleware/validationHandler");
-const register_schema_1 = require("../../types/register.schema");
 const login_schema_1 = require("../../types/login.schema");
+const register_schema_1 = require("../../types/register.schema");
 const router = (0, express_1.Router)();
 router.post('/user', (0, validationHandler_1.validate)({
     body: login_schema_1.LoginSchema,
-}), authentication_contoller_1.loginAsUser);
+}), authentication_controller_1.loginAsUser);
 router.post('/admin', (0, validationHandler_1.validate)({
     body: login_schema_1.LoginSchema,
-}), authentication_contoller_1.loginAsAdmin);
+}), authentication_controller_1.loginAsAdmin);
 router.post('/register', (0, validationHandler_1.validate)({
     body: register_schema_1.TSchema,
-}), authentication_contoller_1.RegisterUser);
+}), authentication_controller_1.RegisterUser);
 router.post('/auth0', (0, validationHandler_1.validate)({
     body: register_schema_1.TSchema,
-}), authentication_contoller_1.Auth0Register);
-router.get('/logout', authentication_contoller_1.loggOut);
-router.get('/refreshToken', authentication_contoller_1.default);
+}), authentication_controller_1.Auth0Register);
+router.get('/logout', authentication_controller_1.loggOut);
+router.get('/refreshToken', authentication_controller_1.default);
 exports.default = router;

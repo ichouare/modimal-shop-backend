@@ -33,16 +33,16 @@ async function loginAsUser(req, res) {
         }
         const AccessToken = (0, generateToken_1.generateAccessToken)({
             userId: existUser?._id?.toString(),
-            role: 'USER',
+            role: "USER" /* Role.USER */,
         });
         const RefreshToken = (0, generateToken_1.generateRefreshToken)({
             userId: existUser?._id?.toString(),
-            role: 'USER',
+            role: "USER" /* Role.USER */,
         });
         (0, setCookies_1.setCookies)(res, AccessToken, RefreshToken);
         return (0, helpers_1.sendSuccess)(res, 200, {
             success: true,
-            message: "Your're connect succesfully",
+            message: 'Your\'re connect succesfully',
         });
     }
     catch (error) {
@@ -71,16 +71,16 @@ async function loginAsAdmin(req, res) {
         }
         const AccessToken = (0, generateToken_1.generateAccessToken)({
             userId: existUser?._id?.toString(),
-            role: 'ADMIN',
+            role: "ADMIN" /* Role.ADMIN */,
         });
         const RefreshToken = (0, generateToken_1.generateRefreshToken)({
             userId: existUser?._id?.toString(),
-            role: 'ADMIN',
+            role: "ADMIN" /* Role.ADMIN */,
         });
         (0, setCookies_1.setCookies)(res, AccessToken, RefreshToken);
         return (0, helpers_1.sendSuccess)(res, 200, {
             success: true,
-            message: "Your're connect succesfully",
+            message: 'Your\'re connect succesfully',
         });
     }
     catch (error) {
@@ -107,10 +107,10 @@ async function RegisterUser(req, res) {
             ...req.body,
         });
         await transporterMail_1.nodeTransporter.sendMail({
-            from: "issam chouaref <issam.chouaref1998@gmail.com>",
+            from: 'issam chouaref <issam.chouaref1998@gmail.com>',
             to: user?.email,
-            subject: "Welcome to Your platoforme",
-            text: "Welcome to our platform! We're excited to have you on board. If you have any questions or need assistance, feel free to reach out to our support team.\n\nBest regards,\nThe Team",
+            subject: 'Welcome to Your platoforme',
+            text: 'Welcome to our platform! We\'re excited to have you on board. If you have any questions or need assistance, feel free to reach out to our support team.\n\nBest regards,\nThe Team',
         });
         return (0, helpers_1.sendSuccess)(res, 200, {
             success: true,
@@ -130,16 +130,17 @@ async function refreshToken(req, res) {
     try {
         if (!JWT_SECRET)
             return;
-        const validateToken = jsonwebtoken_1.default.verify(req.cookies.refreshToken, JWT_SECRET);
-        if (!validateToken) {
-            throw new Error('refresh token is not valide');
-        }
-        const decodeResult = jsonwebtoken_1.default.decode(req.cookies.refreshToken);
+        const decodeResult = jsonwebtoken_1.default.verify(req.cookies.refreshToken, JWT_SECRET);
         const AccessToken = (0, generateToken_1.generateAccessToken)({
             userId: decodeResult?.userId,
             role: decodeResult?.role,
         });
-        res.setHeader('Set-Cookie', `accessToken=${AccessToken}; HttpOnly; Path=/; Max-Age=900; SameSite=Strict`);
+        res.cookie('accessToken', AccessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'none',
+            maxAge: 15 * 60 * 1000, // 15 minutes
+        });
         return (0, helpers_1.sendSuccess)(res, 200, {
             success: true,
             message: 'Token is valid',
@@ -178,7 +179,7 @@ async function Auth0Register(req, res) {
         const user = await user_module_1.User.findOneAndUpdate({ email }, {
             $setOnInsert: {
                 email,
-                name,
+                firstName: name,
                 secondName,
                 avatar,
                 verify: true,
@@ -206,7 +207,7 @@ async function Auth0Register(req, res) {
         return (0, helpers_1.sendError)(res, {
             success: false,
             message: 'Auth failed',
-            errors: error?.message,
+            errors: error?.message || 'Somthing wrong !!',
         });
     }
 }

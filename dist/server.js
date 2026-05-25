@@ -19,14 +19,14 @@ app.set('query parser', 'extended'); // add this line to parser query string if 
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)({
     credentials: true, // Allow sending cookies
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
 app.use((0, cookie_parser_1.default)()); // parser cookies
 try {
     const result = validateEnvFile_1.envSchema.safeParse(process.env);
     if (!result.success) {
-        console.error("Invalid environment variables:");
+        console.error('Invalid environment variables:');
         console.error(result.error.format());
         process.exit(1);
     }
@@ -38,6 +38,6 @@ try {
     });
 }
 catch (e) {
-    console.log("server stop runing withi error", e?.message);
+    console.log('server stop runing withi error', e?.message);
     process.exit(1);
 }

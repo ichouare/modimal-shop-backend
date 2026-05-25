@@ -26,12 +26,12 @@ const userSchema = new mongoose_1.Schema({
     },
     authProvider: {
         type: String,
-        enum: ["local", "auth0"],
-        default: "local"
+        enum: ['local', 'auth0'],
+        default: 'local',
     },
     verify: {
         type: Boolean,
-        default: false
+        default: false,
     },
     updatedAt: {
         type: Date,
@@ -43,22 +43,24 @@ const userSchema = new mongoose_1.Schema({
     },
     role: {
         type: String,
-        enum: ["USER", "ADMIN"],
-        default: "USER"
+        enum: ['USER', 'ADMIN'],
+        default: 'USER',
     },
     avatar: String,
-    favoritsProduct: [{
+    favoritsProduct: [
+        {
             type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Product"
-        }],
+            ref: 'Product',
+        },
+    ],
     pymemtId: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Payment",
+        ref: 'Payment',
     },
     shoppingCartId: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Card",
-    }
+        ref: 'Card',
+    },
 });
 // 🔥 hash before saving
 userSchema.pre('save', async function () {

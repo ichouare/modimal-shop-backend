@@ -10,8 +10,6 @@ function generateAccessToken(user) {
     const JWT_SECRET = process.env.JWT_SECRET;
     if (!JWT_SECRET)
         return;
-    if (!JWT_SECRET)
-        return;
     return jsonwebtoken_1.default.sign(user, JWT_SECRET, {
         expiresIn: '15m',
     });

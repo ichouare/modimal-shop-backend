@@ -14,7 +14,7 @@ import {
 import { adminAuthenticationHandler } from '../../middleware/AdminAuthHandler'
 import { validate } from '../../middleware/validationHandler'
 import { ProductZodSchema } from '../../types/Product.schema'
-import { upload } from '../../services/uploamulter'
+import { upload } from '../../services/uploadmulter'
 
 const router = Router()
 

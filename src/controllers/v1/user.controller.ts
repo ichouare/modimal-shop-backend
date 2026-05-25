@@ -29,7 +29,7 @@ export async function currentUser(req: Request, res: Response) {
   }
 }
 
-export async function restPassword(req: Request, res: Response) {
+export async function resetPassword(req: Request, res: Response) {
   try {
     const { password, newPassword } = req.body
     const userId = req.userId

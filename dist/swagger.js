@@ -21,12 +21,11 @@ const options = {
         },
     ],
 };
-// const swaggerSpec = swaggerJSDoc(options)
 exports.registry = new zod_to_openapi_1.OpenAPIRegistry();
-exports.registry.registerComponent("securitySchemes", "cookieAuth", {
-    type: "apiKey",
-    in: "cookie",
-    name: "accessToken",
+exports.registry.registerComponent('securitySchemes', 'cookieAuth', {
+    type: 'apiKey',
+    in: 'cookie',
+    name: 'accessToken',
 });
 // Register all paths here BEFORE generating the spec
 const zod_1 = __importDefault(require("zod"));
@@ -82,8 +81,13 @@ exports.registry.registerPath({
             content: {
                 'application/json': {
                     schema: zod_1.default.object({
-                        email: zod_1.default.string().email().openapi({ description: 'Email of the user' }),
-                        password: zod_1.default.string().openapi({ description: 'Password of the user' }),
+                        email: zod_1.default
+                            .string()
+                            .email()
+                            .openapi({ description: 'Email of the user' }),
+                        password: zod_1.default
+                            .string()
+                            .openapi({ description: 'Password of the user' }),
                     }),
                 },
             },
@@ -164,9 +168,14 @@ exports.registry.registerPath({
             content: {
                 'application/json': {
                     schema: zod_1.default.object({
-                        email: zod_1.default.string().email().openapi({ description: 'Email of the user' }),
+                        email: zod_1.default
+                            .string()
+                            .email()
+                            .openapi({ description: 'Email of the user' }),
                         name: zod_1.default.string().openapi({ description: 'name of the user' }),
-                        secondName: zod_1.default.string().openapi({ description: 'secondName of the user' }),
+                        secondName: zod_1.default
+                            .string()
+                            .openapi({ description: 'secondName of the user' }),
                         avatar: zod_1.default.string().openapi({ description: 'avatar of the user' }),
                     }),
                 },

@@ -17,5 +17,5 @@ exports.upload = (0, multer_1.default)({
     }),
     limits: {
         fileSize: 1024 * 1024 * 5, // 5MB
-    }
+    },
 });

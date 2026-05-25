@@ -8,6 +8,9 @@ exports.TSchema = zod_1.z.object({
     firstName: zod_1.z.string().openapi({ description: 'firstName of the user' }),
     secondName: zod_1.z.string().openapi({ description: 'secondName of the user' }),
     email: zod_1.z.string().email().openapi({ description: 'email of the user' }),
-    password: zod_1.z.string().openapi({ description: 'password of the user' }).optional(),
+    password: zod_1.z
+        .string()
+        .openapi({ description: 'password of the user' })
+        .optional(),
     avatar: zod_1.z.string().openapi({ description: 'avatar of the user' }).optional(),
 });
